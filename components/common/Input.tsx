@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components"
+import styled, {css} from "styled-components"
 import useValidateMode from "../../hooks/useValidateMode";
 import palette from "../../styles/palette"
 import {useSelector} from "../../store";
@@ -12,7 +12,7 @@ type InputContainerProps = {
 };
 
 
-const Container = styled.div<{ iconExist: boolean}>`
+const Container = styled.div<InputContainerProps>`
   input {
     position: relative;
     width: 100%;

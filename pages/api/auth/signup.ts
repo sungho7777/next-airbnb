@@ -36,7 +36,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         const newUser:StoredUserType={
             id:userId,
             email,
-            firstname,lastname
+            firstname,
+            lastname,
             password: hashedPassword,
             birthday,
             profileImage:"/staic/image/user/default_user_profile_image.jpg",

@@ -15,7 +15,7 @@ const Container = styled.button`
     cursor: pointer;
 `;
 
-interface Iprops extends React.ButtonHTMLAttributes<HTMLButtonElement>{
+interface IProps extends React.ButtonHTMLAttributes<HTMLButtonElement>{
     children: React.ReactNode;
 }
 
