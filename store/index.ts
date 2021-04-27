@@ -6,13 +6,14 @@ import {
 } from "react-redux";
 import user from "./user";
 import common from "./common";
+import auth from "./auth";
 
 const rootReducer = combineReducers({
     common: common.reducer,
     user: user.reducer,
 });
 
-// * 스토어 타입
+// * 스토어 타입   287page
 export type RootState = ReturnType<typeof rootReducer>;
 
 let initialRootState: RootState;

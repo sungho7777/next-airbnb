@@ -11,8 +11,11 @@ import { monthsList, daysList, yearsList } from "../../lib/staticData";
 import Selector from "../common/Selector";
 import Input from "../common/Input";
 import Button from "../common/Button";
-
+import { signupAPI } from '../../lib/api/auth'
+import {useDispatch} from "react-redux";
+import {userActions} from "../../store/user"
 import useValidateMode from "../../hooks/useValidateMode";
+import { commonActions } from '../../store/common'
 import PasswordWarning from "./PasswordWarning";
 
 const Container = styled.div`
@@ -84,12 +87,21 @@ const Container = styled.div`
         padding-button: 16px;
         border-button: 1px solid ${palette.gray_eb}
     }
+    .sign-up-modal-set-login{
+        color: ${palette.dark_cyan};
+        margin-left: 8px;
+        cursor: pointer;
+    }
 `;
 
 
 const PASSWORD_MIN_LENNGTH = 8;
 
-const SignUpModal:React.FC=()=>{
+interface IProps {
+    closeModal: () => void;
+  }
+  
+  const SignUpModal: React.FC<IProps> = ({closeModal}) => {
     const [email, setEmail] = useState("");
     const [lastname, setLastname] = useState("");
     const [firstname, setFirstname] = useState("");
@@ -103,6 +115,7 @@ const SignUpModal:React.FC=()=>{
     const [passwordFocused, setPasswordFocused] = useState(false);
 
     const {setValidateMode} = useValidateMode();
+    const dispatch = useDispatch();
 
     // * 이메일 주소 변경시
     const onChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -145,21 +158,59 @@ const SignUpModal:React.FC=()=>{
     };
 
     // * 회원가입 폼 입력 값 확인하기
-    const validateSignUpForm = ()=>{};
+    const validateSignUpForm = ()=>{
+        // * 인풋값이 없다면
+        if(!email || !lastname || !firstname || !password){
+            return false;
+        }
+        // * 비밀번호가 올바르지 않다면
+        if(
+            isPasswordHasNameOrEmail ||
+            !isPasswordOverMinLength ||
+            isPasswordHasNumberOrSymbol
+        ){
+            return false;
+        }
+        // * 생년월일 셀렉터 값이 없다면
+        if(!birthDay || !birthMonth || !birthYear){
+            return false;
+        }
+    };
     
-    
-    // 281 page
-
-
     // * 회원가입 폼 제출하기
     const onSubmitSignUp = async (event: React.FormEvent<HTMLSelectElement>) => {
         event.preventDefault();
 
         setValidateMode(true);
+        console.log(validateSignUpForm());
         
-        if(!email || !lastname || !!firstname || !password){
-            return undefined;
-        }
+        dispatch(commonActions.setValidateMode(true));
+
+        closeModal();
+        //if(!email || !lastname || !!firstname || !password){
+        //    return undefined;
+        //}
+
+        if (validateSignUpForm()) {
+            try {
+              const signUpBody = {
+                email,
+                lastname,
+                firstname,
+                password,
+                birthday: new Date (
+                  `${birthYear}-${birthMonth!.replace("월","")}-${birthDay}`
+                ).toISOString(),
+              }
+              const { data } = await signupAPI(signUpBody);
+      
+              dispatch(userActions.setLoggedUser(data));
+      
+              console.log(data);
+            } catch (error) {
+              console.log(error);
+            }  
+          }
     };
     
     // * 비밀번호 인풋 포커스 되었을때
@@ -290,6 +341,16 @@ const SignUpModal:React.FC=()=>{
             <div className="sign-up-modal-submit-button-wrapper">
                 <Button type="submit">가입하기</Button>
             </div>
+            <p>
+                이미 에어비앤비 계정이 있나요?
+                <span
+                    className="sign-up-modal-set-login"
+                    role="presentation"
+                    onClick={() => {}}
+                >
+                로그인
+                </span>
+            </p>
         </Container>
     )
 };
