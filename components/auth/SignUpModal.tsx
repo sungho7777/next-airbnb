@@ -17,8 +17,9 @@ import {userActions} from "../../store/user"
 import useValidateMode from "../../hooks/useValidateMode";
 import { commonActions } from '../../store/common'
 import PasswordWarning from "./PasswordWarning";
+import { authActions } from "../../store/auth";
 
-const Container = styled.div`
+const Container = styled.form`
     width: 568px;
     height: 614px;
     padding:32px;
@@ -117,6 +118,12 @@ interface IProps {
     const {setValidateMode} = useValidateMode();
     const dispatch = useDispatch();
 
+    useEffect(() => {
+        return () => {
+            setValidateMode(false);
+        };
+    }, []);
+
     // * 이메일 주소 변경시
     const onChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(event.target.value);
@@ -175,10 +182,12 @@ interface IProps {
         if(!birthDay || !birthMonth || !birthYear){
             return false;
         }
+
+        return true;
     };
     
     // * 회원가입 폼 제출하기
-    const onSubmitSignUp = async (event: React.FormEvent<HTMLSelectElement>) => {
+    const onSubmitSignUp = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         setValidateMode(true);
@@ -186,27 +195,28 @@ interface IProps {
         
         dispatch(commonActions.setValidateMode(true));
 
-        closeModal();
         //if(!email || !lastname || !!firstname || !password){
         //    return undefined;
         //}
 
         if (validateSignUpForm()) {
             try {
-              const signUpBody = {
-                email,
-                lastname,
-                firstname,
-                password,
-                birthday: new Date (
-                  `${birthYear}-${birthMonth!.replace("월","")}-${birthDay}`
-                ).toISOString(),
-              }
-              const { data } = await signupAPI(signUpBody);
+                const signUpBody = {
+                    email,
+                    lastname,
+                    firstname,
+                    password,
+                    birthday: new Date (
+                        `${birthYear}-${birthMonth!.replace("월","")}-${birthDay}`
+                    ).toISOString(),
+                }
+                const { data } = await signupAPI(signUpBody);
       
-              dispatch(userActions.setLoggedUser(data));
+                dispatch(userActions.setLoggedUser(data));
       
-              console.log(data);
+                console.log(data);
+              
+                closeModal();
             } catch (error) {
               console.log(error);
             }  
@@ -242,9 +252,15 @@ interface IProps {
             ),
         [password]
     );
+
+    // * 로그인 모달로 변경하기
+    const changeToLoginModal=()=>{
+        dispatch(authActions.setAuthMode("login"));
+    };
+
     return (
-        <Container>
-            <CloseXIcon className="modal-close-x-icon" />
+        <Container onSubmit={onSubmitSignUp}>
+            <CloseXIcon className="modal-close-x-icon" onClick={closeModal} />
             <div className="input-wrapper">
                 <Input placeholder="이메일 주소" type="email" icon={<MailIcon />} 
                     name="email" value={email} onChange={onChangeEmail}
@@ -346,7 +362,7 @@ interface IProps {
                 <span
                     className="sign-up-modal-set-login"
                     role="presentation"
-                    onClick={() => {}}
+                    onClick={changeToLoginModal}
                 >
                 로그인
                 </span>

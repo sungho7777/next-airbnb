@@ -11,9 +11,10 @@ import auth from "./auth";
 const rootReducer = combineReducers({
     common: common.reducer,
     user: user.reducer,
+    auth: auth.reducer,
 });
 
-// * 스토어 타입   287page
+// * 스토어 타입
 export type RootState = ReturnType<typeof rootReducer>;
 
 let initialRootState: RootState;

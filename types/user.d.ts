@@ -3,7 +3,7 @@ export type UserType = {
   email: string;
   firstname: string;
   lastname: string;
-  birthday: Date | null;
+  birthday: string | null;
   profileImage: string;
 };
 
@@ -13,6 +13,6 @@ export type StoredUserType = {
     password?: string;
     firstname: string;
     lastname: string;
-    birthday: Date;
+    birthday: string;
     profileImage: string;
   };

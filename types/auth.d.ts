@@ -4,7 +4,7 @@ export type SingUpAPIBody = {
     firstname: string;
     lastname: string;
     password: string;
-    birthday: Date;
+    birthday: string;
 };
 
 // * 로그인 body

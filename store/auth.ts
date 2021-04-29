@@ -2,7 +2,7 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 // * 초기상태
 const initialState:{authMode:"signup" | "login"}={
-    authMode:"signup";
+    authMode:"signup",
 };
 
 const auth=createSlice({

@@ -12,7 +12,12 @@ const globalStyle = css`
   body {
     font-family: Airbnb Cereal, sans-serif;
     line-height: 1.2;
-  }  
+  }
+
+  a {
+    text-decoration: none;
+    color: ${palette.black};
+  }
 `;
 
 const GlobalStyle = createGlobalStyle`

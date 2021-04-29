@@ -40,7 +40,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             lastname,
             password: hashedPassword,
             birthday,
-            profileImage:"/staic/image/user/default_user_profile_image.jpg",
+            profileImage:"/public/staic/image/user/default_user_profile_image.jpg",
         };
 
         Data.user.write([...users, newUser]);
@@ -69,16 +69,3 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     return res.end();
 };
-
-
-
-/*
-
-    263 page 
-        새 유저 리덕스 저장시 소스 코딩 어디에??
-
-
-
-
-
-*/

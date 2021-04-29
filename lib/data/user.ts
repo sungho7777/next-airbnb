@@ -20,8 +20,14 @@ const exist=({email}:{email:string})=>{
 
 // * 유저 리스트 저장하기
 const write=async(users:StoredUserType[])=>{
-    writeFileSync("data/user.json", JSON.stringify(users));
+    writeFileSync("data/users.json", JSON.stringify(users));
+};
+
+// * email 또는 id 의 유저 불러오기
+const find = ({ email, id }: { email?: string; id?: number }) => {
+    const users = getList();
+    return users.find((user) => user.email === email || user.id === id);
 };
 
 
-export default {getList, exist, write};
+export default {getList, exist, write, find};
