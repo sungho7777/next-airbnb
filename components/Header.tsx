@@ -1,23 +1,22 @@
-import React, {useState} from "react";
-import styled from "styled-components";
-import Link from "next/link";
-import palette from "../styles/palette";
-import {useSelector} from "../store";
-import HamburgerIcon from "../public/static/svg/header/hamburger.svg";
+import React, { useState } from "react"
+import styled from "styled-components"
 import AirbnbLogoIcon from "../public/static/svg/logo/airbnb_logo.svg";
 import AirbnbLogoTextIcon from "../public/static/svg/logo/airbnb_logo_text.svg";
-//import ModalPortal from "./ModalPortal";
-import useModal from "../hooks/useModal";
-import SignUpModal from "./auth/SignUpModal";
-
-import {useDispatch} from "react-redux";
-import {authActions} from "../store/auth";
+import Link from "next/link"
+import palette from "../styles/palette";
+// import ModalPortal from './ModalPortal';
+import SignUpModal from './auth/SignUpModal';
+import useModal from '../hooks/useModal';
+import { useSelector } from "../store"
+import HamburgerIcon from "../public/static/svg/header/hamburger.svg"
+import { useDispatch } from "react-redux";
+import { authActions } from "../store/auth"
 import AuthModal from "./auth/AuthModal";
-import OutsideClickHandler from "react-outside-click-handler";
-import { logoutAPI } from "../lib/api/auth";
-import {userActions} from "../store/user";
+import OutsideClickHandler from 'react-outside-click-handler';
+import { logoutAPI } from '../lib/api/auth';
+import { userActions } from '../store/user';
 import HeaderAuths from "./HeaderAuths";
-import HeaderUserProfile from "./HeaderUserProfile";
+import HeaderUserProfile from './HeaderUserProfile';
 
 const Container = styled.div`
   position: sticky;
@@ -29,7 +28,7 @@ const Container = styled.div`
   align-items: center;
   padding: 0 80px;
   background-color: white;
-  box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 12px !important;
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 1px 12px;
   z-index: 10;
   .header-logo-wrapper {
     display: flex;
@@ -37,13 +36,7 @@ const Container = styled.div`
     .header-logo {
       margin-right: 6px;
     }
-    h1 {
-      font-size: 21px;
-      font-weight: bold;
-      color: ${palette.main_pink};
-    }
-  } 
-
+  }
   /** 헤더 로그인 회원가입 버튼 */
   .header-auth-buttons {
     .header-sign-up-button {
@@ -59,6 +52,7 @@ const Container = styled.div`
         background-color: ${palette.gray_f7};
       }
     }
+
     .header-login-button {
       height: 42px;
       padding: 0 16px;
@@ -73,6 +67,29 @@ const Container = styled.div`
       }
     }
   }
+  
+  /* .modal-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top:0;
+    left:0;
+  .modal-background {
+    position: absolute;
+    width: 100%;
+    height:100%;
+    background-color:rgba(0, 0, 0, 0.75);
+    z-index:10;
+  }
+  .modal-contents {
+    width: 400px;
+    height: 400px;
+    background-color: white;
+    z-index:11;
+  } */
   
   .header-user-profile {
     display: flex;
@@ -95,17 +112,19 @@ const Container = styled.div`
       border-radius: 50%;
     }
   }
-  /** react-ouside-click-handler div */
+
+  // react-outside-click-hand;er div
   .header-logo-wrapper + div {
     position: relative;
   }
+
   .header-usermenu {
     position: absolute;
     right: 0;
     top: 52px;
     width: 240px;
     padding: 8px 0;
-    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 16px rgba(0,0,0,0.12);
     border-radius: 8px;
     background-color: white;
     li {
@@ -119,30 +138,49 @@ const Container = styled.div`
         background-color: ${palette.gray_f7};
       }
     }
-    .header-usermenu-divider {
-      width: 100%;
-      height: 1px;
-      margin: 8px 0;
-      background-color: ${palette.gray_dd};
-    }
   }
-  
+
+  .header-usermenu-divider {
+    width: 100%;
+    height: 1px;
+    margin: 8px 0;
+    background-color: ${palette.gray_dd};
+  }
 `;
 
 const Header: React.FC = () => {
+  // const [modalOpened, setModalOpened] = useState();
+  const {openModal, closeModal, ModalPortal} = useModal();
+  const dispatch = useDispatch();
+
+  // 유저 메뉴 열고 닫힘 여부
   const isLogged = useSelector((state) => state.user.isLogged);
+
+  const logout = async () => {
+    try {
+      await logoutAPI();
+      dispatch(userActions.initUser());
+      console.log("clicked");
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
 
   return (
     <Container>
       <Link href="/">
-        <a className="header-logo-wrapper">
-          <AirbnbLogoIcon className="header-logo" />
+        <div className="header-logo-wrapper">
+          <AirbnbLogoIcon  className="header-logo" />
           <AirbnbLogoTextIcon />
-        </a>
+        </div>
       </Link>
-
+      
       {!isLogged && <HeaderAuths />}
       {isLogged && <HeaderUserProfile />}
+      
+      <ModalPortal>
+        <AuthModal closeModal={closeModal} />
+      </ModalPortal>
     </Container>
   );
 };

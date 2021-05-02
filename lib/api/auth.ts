@@ -1,20 +1,27 @@
-import axios from "axios";
-import { SingUpAPIBody } from "../../types/auth";
-import {UserType} from "../../types/user";
+import axios from "axios"
+import { UserType } from "../../types/user"
 
-// * 회원가입 body
-export const signupAPI = (body: SingUpAPIBody)=>
-    axios.post<UserType>("/api/auth/signup", body);
+// 사용자 인증에 관련된 api를 모아놓은 파일
+// 회원가입 body
+interface SignUpAPIBody {
+  email: string;
+  firstname: string;
+  lastname: string;
+  password: string;
+  birthday: string;
+}
 
-// * 로그인 api
-export const loginAPI = (body: {email: string; password:string})=>
-    axios.post<UserType>("/api/auth/login", body);
+// 회원가입 api를 사용하는 함수를 만들도록 한다.
+// 회원가입 api
+export const signupAPI = (body: SignUpAPIBody) =>
+  axios.post<UserType>("/api/auth/signup", body);
 
-//* 쿠키의 access_tocken의 유저 정보 받아오는 api
+export const loginAPI = (body: {email: string; password: string}) => 
+  axios.post<UserType>("/api/auth/login", body);
+
+
+// 쿠키의 access_token의 유저 정보 받아오는 api
 export const meAPI = () => axios.get<UserType>("/api/auth/me");
 
-//* 로그아웃 api
+// 로그아웃 api
 export const logoutAPI = () => axios.delete("/api/auth/logout");
-
-
-    

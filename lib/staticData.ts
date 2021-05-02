@@ -1,5 +1,4 @@
-
-export const monthsList = [
+export const monthList = [
   "1월",
   "2월",
   "3월",
@@ -11,11 +10,11 @@ export const monthsList = [
   "9월",
   "10월",
   "11월",
-  "12월",
+  "12월"
 ];
 
 // 1부터 31까지
-export const daysList = Array.from(Array(31), (_, i) => String(i + 1));
+export const dayList = Array.from(Array(31), (_, i) => String(i + 1));
 
 // 2020부터 1900년까지
-export const yearsList = Array.from(Array(121), (_, i) => String(2020 - i));
+export const yearList = Array.from(Array(121), (_, i) => String(2020 - i));

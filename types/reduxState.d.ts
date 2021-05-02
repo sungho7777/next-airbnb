@@ -1,12 +1,11 @@
-import {UserType} from "./user";
+// import {UserType} from "./user";
 
-// * 유저 redux state
+// 유저 redux state
 export type UserState = UserType & {
-    isLogged:boolean;
-};
-
-
-//* 공통 redux state
-export type CommonState = {
+    isLogged: boolean;
+  };
+  
+  export type CommonState = {
     validateMode: boolean;
   };
+  

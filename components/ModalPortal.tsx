@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
-import styled from "styled-components";
+import React, {useEffect, useRef, useState} from "react"
+import {createPortal} from "react-dom"
+import styled from "styled-components"
 
 const Container = styled.div`
   width: 100%;
@@ -20,38 +20,37 @@ const Container = styled.div`
   }
 `;
 
-interface IProps{
-    children:React.ReactNode;
-    closePortal:()=>void;
+interface IProps {
+  children: React.ReactNode;
+  closePortal: () => void;
 }
 
-const ModalProtal: React.FC<IProps>=({children, closePortal})=>{
-    const ref=useRef<Element | null>();
-    const [mounted, setMounted] = useState(false);
+const ModalPortal: React.FC<IProps> = ({children, closePortal}) => {
+  const ref = useRef<Element | null>();
+  const [mounted, setMounted] = useState(false);
 
-    useEffect(()=>{
-        setMounted(true);
-        if(document){
-            const dom=document.querySelector("#root-modal");
-            ref.current=dom;
-        }
-    }, []);
-
-    if(ref.current && mounted){
-        return createPortal(
-            <Container>
-            <div
-              className="modal-background"
-              onClick={closePortal}
-              role="presentation"
-            />
-            {children}
-          </Container>,
-          ref.current
-        );
+  useEffect(() => {
+    setMounted(true);
+    if (document) {
+      const dom = document.querySelector("#root-modal");
+      ref.current = dom;
     }
+  }, []);
 
-    return null;
-}
+  if (ref.current && mounted) {
+    return createPortal (
+      <Container>
+        <div 
+          className="modal-background"
+          role="presentation"
+          onClick={closePortal}
+        />
+        {children}
+      </Container>,
+      ref.current
+    )
+  }
+  return null;
+};
 
 export default ModalPortal;

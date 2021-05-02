@@ -11,11 +11,15 @@ const Container = styled.div<{isValid: boolean; validateMode: boolean}>`
       select {
         border-color: ${isValid ? palette.dark_cyan:palette.tawny}
         !important;
+
         background-color: ${isValid ? "whiht" : palette.snow};
       }
     `}
+
+
   width: 100%;
   height: 46px;
+
   select {
     width: 100%;
     height: 100%;
@@ -29,6 +33,7 @@ const Container = styled.div<{isValid: boolean; validateMode: boolean}>`
     background-position: right 11px center;
     background-repeat: no-repeat;
     font-size:16px;
+
     &:focus {
       border-color: ${palette.dark_cyan};
     }
