@@ -87,9 +87,14 @@ const LoginModal: React.FC<IProps> = ({closeModal}) => {
     } else {
       const loginBody = {email, password};
 
+      console.log("email : "+email);
+      console.log("password : "+password);
       try {
+        console.log("1");
         const { data } = await loginAPI(loginBody);
+        console.log("2");
         dispatch(userActions.setLoggedUser(data));
+        console.log("3");
         closeModal();
         console.log(data);
       } catch (error) {
