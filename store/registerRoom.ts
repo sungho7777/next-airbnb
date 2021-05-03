@@ -23,10 +23,24 @@ const registerRoom = createSlice({
     reducers:{},
 });
 
-// * 건물 유형 변경하기
-setBuildingType(state, action:PayloadAction<string){
+// * 건물 유형 변경하기. 338 page
+//setBuildingType(state, action:PayloadAction<string>){
+//    if(action.payload===""){
+//        StaticRange.buildingType=null;
+//    }  
+//},
 
-},
+// * 숙소 유형 변경하기. 348 page
+//setRoomdingType(state, action:PayloadAction<"entire" | "private" | "public">){
+//    state.roomType = action.payload;
+//    return state;
+//},
+
+// * '게스트용 숙소인지' 변경하기
+//setIsSetUpForGuest(state, action:PayloadAction<boolean>){
+//    state.isSetUpForGuest = action.payload;
+//    return state;
+//},
 
 export const registerRoomActions={...registerRoom.actions};
 

@@ -8,9 +8,6 @@ import { signupAPI } from '../../../lib/api/auth';
 // import { SignUpAPIBody } from "../../../lib/api/auth"
 
 export default async (req: NextApiRequest, res:NextApiResponse) => {
-  console.log("=========================");
-  
-
   if(req.method === "POST") {
       const { email, firstname, lastname, password, birthday } = req.body;
 

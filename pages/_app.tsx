@@ -27,7 +27,11 @@ app.getInitialProps = async (context: AppContext) => {
   try {
     if (!isLogged && cookieObject.access_token) {
       axios.defaults.headers.cookie = cookieObject.access_token;
-      const { data } = await meAPI();
+      //const { data } = await meAPI();
+      const { data } =  axios.get("/api/auth/me");
+
+      
+      //export const meAPI = () => axios.get<UserType>("/api/auth/me");
       store.dispatch(userActions.setLoggedUser(data));
 
       console.log(data);

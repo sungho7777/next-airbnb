@@ -6,7 +6,7 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
     if(req.method === "DELETE"){
       res.setHeader(
         "Set-Cookie",
-        "access_token; path=/; expired=Thu, 01 Jan 1970 00:00:00 GMT; httponly"
+        "access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; httponly"
       );
       res.statusCode = 204;
       return res.end();
