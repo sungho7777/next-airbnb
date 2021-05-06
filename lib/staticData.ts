@@ -24,7 +24,7 @@ export const largeBuildingTypeList=[
   "아파트",
   "주택",
   "별채",
-  "독측한 숙소",
+  "독특한 숙소",
   "B&B",
   "부티크호텔",
 ];

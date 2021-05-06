@@ -106,7 +106,7 @@ interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
 const RadioGroup: React.FC<IProps> = ({
     label,
     value,
-    options,
+    options=[],
     onChange,
     isValid,
     errorMessage = "옵션을 선택하세요",

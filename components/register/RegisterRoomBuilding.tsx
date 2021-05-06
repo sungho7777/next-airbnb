@@ -7,6 +7,7 @@ import { registerRoomActions } from "../../store/registerRoom";
 import {largeBuildingTypeList} from "../../lib/staticData";
 import Selector from "../common/Selector";
 import RadioGroup from "../common/RadioGroup";
+import RegisterRoomFooter from "./RegisterRoomFooter";
 
 const Container = styled.div`
     padding: 62px 30px 100px;
@@ -35,6 +36,7 @@ const Container = styled.div`
 
 // * 선택 불가능한 큼 범위 건물 유형
 const disabledlargeBuildingTypeOptions = ["하나를 선택해주세요."];
+
 // * 숙소 유형 radio options
 const roomTypeRadioOptions = [
     {
@@ -54,7 +56,7 @@ const roomTypeRadioOptions = [
     },
 ];
 // * 게스트만 사용하도록 만들어진 숙소인지 라디오 options
-const isSetUpForGuests = [
+const isSetUpForGuestOptions = [
     {
         label:"예, 게스트용으로 따로 마련된 숙소입니다.",
         value:true,
@@ -65,23 +67,24 @@ const isSetUpForGuests = [
     },
 ];
 
-
-
-
 const RegisterRoomBuilding:React.FC=()=>{
-    const largeBuildingType = useSelector(
-        (state) => state.registerRoom.largeBuildingType
-    );
+    const largeBuildingType = useSelector((state) => state.registerRoom.largeBuildingType);
     const buildingType = useSelector((state) => state.registerRoom.buildingType);
     const roomType = useSelector((state) => state.registerRoom.roomType);
-    const isSetUpForGuest = useSelector(
-        (state) => state.registerRoom.isSetUpForGuest
-    );
+    const isSetUpForGuest = useSelector((state) => state.registerRoom.isSetUpForGuest);
+    
+    const dispatch = useDispatch();
+
+    // * 큰 범위 건물 유형 변경 시
+    const onChangeLargeBuildingType = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        dispatch(registerRoomActions.setLargeBuildingType(event.target.value));
+    };
     
     // * 상세 건물 유형 변경시
     const onChangeBuildingType=(event:React.ChangeEvent<HTMLSelectElement>)=>{
         dispatch(registerRoomActions.setBuildingType(event.target.value));
     };
+
     // * 숙소 유형 변경시
     const onChangeRoomType = (event:React.ChangeEvent<HTMLInputElement>)=>{
         const selected=event.target.value;
@@ -91,12 +94,12 @@ const RegisterRoomBuilding:React.FC=()=>{
             )
         );
     };
+
     // * 게스트용 숙소인지 변경 시
     const onChangeIsSetUpForGuest=(value:any)=>{
         dispatch(registerRoomActions.setIsSetUpForGuest(value));
     };
 
-    const dispatch = useDispatch();
 
     // * 선택된 건물 유형 options
     const detailBuildingOptions=useMemo(()=>{
@@ -105,7 +108,7 @@ const RegisterRoomBuilding:React.FC=()=>{
                 const { 
                     apartmentBuildingTypeList,
                 } = require("../../lib/staticData");
-                dispatchEvent(
+                dispatch(
                     registerRoomActions.setBuildingType(apartmentBuildingTypeList[0])
                 );
                 return apartmentBuildingTypeList;
@@ -114,7 +117,7 @@ const RegisterRoomBuilding:React.FC=()=>{
                 const {
                     houstBuildingTypeList
                 } = require("../../lib/staticData");
-                dispatchEvent(
+                dispatch(
                     registerRoomActions.setBuildingType(houstBuildingTypeList[0])
                 );
                 return houstBuildingTypeList;
@@ -123,7 +126,7 @@ const RegisterRoomBuilding:React.FC=()=>{
                 const {
                     secondaryUnitBuildingTypeList,
                 } = require("../../lib/staticData");
-                dispatchEvent(
+                dispatch(
                     registerRoomActions.setBuildingType(secondaryUnitBuildingTypeList[0])
                 );
                 return secondaryUnitBuildingTypeList;
@@ -132,7 +135,7 @@ const RegisterRoomBuilding:React.FC=()=>{
                 const {
                     uniqueSpaceBuildingTypeList
                 } = require("../../lib/staticData");
-                dispatchEvent(
+                dispatch(
                     registerRoomActions.setBuildingType(uniqueSpaceBuildingTypeList[0])
                 );
                 return uniqueSpaceBuildingTypeList;
@@ -141,7 +144,7 @@ const RegisterRoomBuilding:React.FC=()=>{
                 const {
                     bnbBuildingTypeList
                 } = require("../../lib/staticData");
-                dispatchEvent(
+                dispatch(
                     registerRoomActions.setBuildingType(bnbBuildingTypeList[0])
                 );
                 return bnbBuildingTypeList;
@@ -150,16 +153,25 @@ const RegisterRoomBuilding:React.FC=()=>{
                 const {
                     boutiquesHotelBuildingTypeList,
                 } = require("../../lib/staticData");
-                dispatchEvent(
+                dispatch(
                     registerRoomActions.setBuildingType(boutiquesHotelBuildingTypeList[0])
                 );
                 return boutiquesHotelBuildingTypeList;
             }
             default:
-            return [];
+                return [];
         }
     }, [largeBuildingType]);
 
+    // * 모든 값이 있는지 확인하기
+    const isValid=useMemo(() => {
+        if(!largeBuildingType || !buildingType || !roomType || !isSetUpForGuest === null){
+            return false;
+
+        }
+        return true;
+
+    },[largeBuildingType, buildingType, roomType, isSetUpForGuest]);
 
     return (
         <Container>
@@ -168,24 +180,55 @@ const RegisterRoomBuilding:React.FC=()=>{
             <div className="register-room-building-selector-wrapper">
                 <Selector
                     type="register"
-                    value={buildingType || undefined}
-                    disabled={!largeBuildingType}
-                    label="우선 범위를 좁혀볼가요?"
+                    value={largeBuildingType || undefined}
+                    disabled={!disabledlargeBuildingTypeOptions}
+                    defaultValue="하나를 섭택해주세요."
+                    disabledOptions={disabledlargeBuildingTypeOptions}
+                    isValid={!!largeBuildingType}
+                    label="우선 범위를 좁혀볼까요?"
                     options={largeBuildingTypeList}
-                    onChange={onChangeBuildingType}
-                    
+
+                    onChange={onChangeLargeBuildingType}
+                />
+            </div>
+            <div className="register-room-building-selector-wrapper">
+                <Selector
+                type="register"
+                value={buildingType || undefined}
+                onChange={onChangeBuildingType}
+                disabled={!largeBuildingType}
+                isValid={!!buildingType}
+                label="건물 유형을 선택하세요."
+                options={detailBuildingOptions}
                 />
             </div>
             {buildingType && (
-                <div className="register-room-room-type-radio">
-                    <RadioGroup
-                        label="게스트가 묵게 될 숙소 유형을 골라주세요."
-                        value={isSetUpForGuest}
-                        options={roomTypeRadioOptions}
-                        onChange={onChangeRoomType}
-                    />
-                </div>
+                <>
+                    <div className="register-room-room-type-radio">
+                        <RadioGroup
+                            isValid={!!roomType}
+                            label="게스트가 묵게 될 숙소 유형을 골라주세요."
+                            value={roomType}
+                            options={roomTypeRadioOptions}
+                            onChange={onChangeRoomType}
+                        />
+                    </div>
+                    <div className="register-room-is-setup-for-guest-radio">
+                        <RadioGroup
+                            isValid={isSetUpForGuest!==null}
+                            label="게스트만 사용하도록 만들어진 숙소인가요?"
+                            value={isSetUpForGuest}
+                            onChange={onChangeIsSetUpForGuest}
+                            options={isSetUpForGuestOptions}
+                        />
+                    </div>
+                </>
             )}
+            <RegisterRoomFooter
+                isValid={false}
+                prevHref="/"
+                nextHref="/room/register/bedrooms"
+            />
         </Container>
     );
 };

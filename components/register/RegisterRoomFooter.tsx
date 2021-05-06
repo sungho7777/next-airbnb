@@ -4,6 +4,7 @@ import Link from "next/link";
 import BackArrowIcon from "../../public/static/svg/register/register_room_footer_back_arrow.svg";
 import Button from "../common/Button";
 import palette from "../../styles/palette";
+import useValidateMode from "../../hooks/useValidateMode";
 
 const Container = styled.footer`
     position: fixed;
@@ -34,10 +35,28 @@ interface IProps{
     isValid?: boolean;
 }
 
-const RegisterRoomFooter:React.FC<IProps>=({prevHref, nextHref})=>{
+const RegisterRoomFooter:React.FC<IProps>=({
+    prevHref, 
+    nextHref, 
+    isValid=true,
+})=>{
+    const {setValidateMode}=useValidateMode();
+
+    useEffect(()=>{
+        return()=>{
+            setValidateMode(false);
+        };
+    },[]);
+
+    // * 계속 버튼 클릭 시
     const onClickNext=(
         event:React.MouseEvent<HTMLButtonElement, MouseEvent>
-    )=>{};
+    )=>{
+        if(!isValid){
+            event.preventDefault();
+            setValidateMode(true);
+        }
+    };
     
     return (
         <Container>
