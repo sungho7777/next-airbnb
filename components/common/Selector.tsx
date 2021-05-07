@@ -134,7 +134,7 @@ const Selector: React.FC<IProps> = ({
         {label && <span>{label}</span>}
         <select {...props}>
           {options?.map((option, index) => (
-            <option key={index} disabled={disabledOptions.includes(option)}>
+            <option key={index} value={option} disabled={disabledOptions.includes(option)}>
               {option}
             </option>
           ))}
