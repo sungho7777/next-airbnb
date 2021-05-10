@@ -1,10 +1,13 @@
 import React, {useMemo, useState} from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { bedTypes } from "../../../lib/staticData";
+import {useSelector} from "../../../store";
 import { registerRoomActions } from "../../../store/registerRoom";
 import palette from "../../../styles/palette";
 import {BedType} from "../../../types/room";
 import Button from "../../common/Button";
+import Counter from "../../common/Counter";
 import Selector from "../../common/Selector";
 
 const Container = styled.li`
@@ -22,13 +25,17 @@ const Container = styled.li`
     font-size: 19px;
     color: ${palette.gray_48};
   }
+  .register-room-public-bed-type-counters {
+    width: 320px;
+    margin-top: 28px;
+  }
   .register-room-bed-type-selector-wrapper {
     margin-top: 28px;
     width: 320px;
   }
   .register-room-bed-type-counters {
-    width: 320px;
-    margin-top: 28px;
+    font-size: 19px;
+    color: ${palette.gray_76};
   }
   .register-room-bed-type-counter {
     width: 290px;
@@ -42,11 +49,10 @@ interface IProps{
 
 const RegisterRoomBedTypes: React.FC<IProps> = ({bedroom})=>{
     const [opened, setOpened] = useState(false);
-    // * 선택된 침대 옵션들
-    const [activedBedOptions, setActivedBedOptions] = useState<BedType[]>([]);
+    //const publicBedList = useSelector((state)=>state.registerRoom.publicBedList);
 
-
-
+    
+    const dispatch = useDispatch();
 
 
     // * 침대 개수 총합
@@ -57,33 +63,38 @@ const RegisterRoomBedTypes: React.FC<IProps> = ({bedroom})=>{
         });
         return total;
     }, [bedroom]);
+    // * 침대 종류 텍스트
+    const bedsText = useMemo(()=>{
+        const texts=bedroom.beds.map((bed) => `${bed.type} ${bed.count} 개`);
+        return texts.join(",");
+    }, []);
+
+    const initialBedOptions = bedroom.beds.map((bed) => bed.type);
+    // * 선택된 침대 옵션들
+    const [activedBedOptions, setActivedBedOptions] = useState<BedType[]>(
+        initialBedOptions
+    );
     // * 남은 침대 옵션들
     const lastBedOptions=useMemo(()=>{
         return bedTypes.filter((bedType)=>!activedBedOptions.includes(bedType));
     }, [activedBedOptions, bedroom]);
 
-
-
-
-    // * 침실 유형 열고 닫기
-    const toggleOpend = () => setOpened(!opened);
-
-
+    
 
 
     return (
         <Container>
-            
-        
             <div className="register-room-bed-type-top">
-                <div className="register-room-bed-type-bedroom-texts">
-                    <p className="register-room-bed-type-bedroom">{bedroom.id}번 침실</p>
+                <div>
+                    <p className="register-room-bed-type-bedroom">{bedroom.id} 번 침실</p>
                     <p className="register-room-bed-type-bedroom-counts">
-                        침대 {totalBedsCount}개
+                        침대 {totalBedsCount}개 <br />
+                        
                     </p>
+                    <p>{bedsText}</p>
                 </div>
                 <Button 
-                    onClick={toggleOpend}
+                    onClick={()=>setOpened(!opened)}
                     styleType="register"
                     color="white"
                 >
@@ -93,8 +104,30 @@ const RegisterRoomBedTypes: React.FC<IProps> = ({bedroom})=>{
                     }
                 </Button>
             </div>
+            
             {opened && (
-                <div className="register-room-bed-type-selector-wrapper">
+                <div className="register-room-bed-type-counters">
+                    {activedBedOptions.map((type)=>(
+                        <div className="register-room-bed-type-counter" key={type}>
+                            <Container
+                                label={type}
+                                value={
+                                    bedroom.beds.find((bed)=>bed.type === type)?.count || 0
+                                }
+                                key={type}
+                                onChange={(value) =>
+                                    dispatch(
+                                        // * 침대 유형 개수 변경하기
+                                        registerRoomActions.setBedTypeCount({
+                                            bedroomId: bedroom.id,
+                                            type,
+                                            count: value,
+                                        })
+                                    )
+                                }
+                            />
+                        </div>
+                    ))}
                     <Selector
                         type="register"
                         options={lastBedOptions}
@@ -102,33 +135,12 @@ const RegisterRoomBedTypes: React.FC<IProps> = ({bedroom})=>{
                         value="다른 침대 추가"
                         disabledOptions={["다른 침대 추가"]}
                         useValidation={false}
-                        onChange={(e)=>setActivedBedOptions([
-                            ...activedBedOptions,
-                            e.target.value as BedType,
+                        onChange={(e)=>
+                            setActivedBedOptions([
+                                ...activedBedOptions,
+                                e.target.value as BedType,
                         ])}
                     />
-                </div>
-            )}
-            {opened && (
-                <div className="register-room-bed-type-counters">
-                    {activedBedOptions.map((type)=>(
-                        <div className="register-room-bed-type-counter" key={type}>
-                            <Container
-                                label={type}
-                                value={bedroom.beds.find((bed)=>bed.type===type)?.count || 0}
-                                key={type}
-                                onChange={(value)=>
-                                    dispatch(
-                                        registerRoomActions.setBedTypeCount({
-                                            bedroomId:bedroom.id,
-                                            type,
-                                            count:value,
-                                        })
-                                    )
-                                }
-                            />
-                        </div>
-                    ))}
                 </div>
             )}
         </Container>

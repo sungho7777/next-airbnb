@@ -10,8 +10,11 @@ import { bedroomCountList } from "../../../lib/staticData";
 import { getNumber } from "../../../lib/utils";
 import Button from "../../common/Button";
 import bedrooms from "../../../pages/room/register/bedrooms";
+
+import RegisterRoomBedList from "./RegisterRoomBedList";
 import RegisterRoomBedTypes from "./RegisterRoomBedTypes";
 //import RegisterRoomBedTypes from "./RegisterRoomBedTypes";
+import RegisterRoomFooter from "./RegisterRoomFooter";
 
 const Container = styled.div`
     padding: 62px 30px 100px;
@@ -84,8 +87,6 @@ const RegisterRoomBedrooms:React.FC=()=>{
     const bedroomCount=useSelector((state)=>state.registerRoom.bedroomCount);
     // * 최대 침대 개수 변경.
     const bedCount = useSelector((state)=>state.registerRoom.bedCount);
-    // * 침대 목록
-    const bedList = useSelector((state)=>state.registerRoom.bedList);
 
 
     const dispatch = useDispatch();
@@ -126,25 +127,30 @@ const RegisterRoomBedrooms:React.FC=()=>{
                     value={`침실 ${bedrooms} 개`}
                     onChange={onChangeBedroomCount}
                     label="게스트가 사용할 수 있는 침실은 몇 개인가요?"
+                    isValid={!!bedroomCount}
                     options={bedroomCountList}
                 />
             </div>
             <div className="register-room-bed-count-wrapper">
-                <Counter label="침대" value={bedCount} onChange={onChangeBedCount} />
-                
+                <Counter 
+                    label="침대" 
+                    value={bedCount} 
+                    onChange={onChangeBedCount} 
+                />
             </div>
 
             <h3>침대 유형</h3>
             <p className="register-room-bed-type-info">
                 각 침실에 놓인 침대 유형을 명시하면 숙소에 침대가 어떻게 구비되어 있는지 게스트가 잘 파악할 수 있습니다.
             </p>
-
-            <div className="register-room-bed-type-list-wrapper">
-                {bedList.map((bedroom) => (
-                    <RegisterRoomBedTypes bedroom = {bedroom} />
-
-                ))}
-            </div>
+            
+            <RegisterRoomBedList />
+            
+            <RegisterRoomFooter
+                prevHref="/room/register/building"
+                nextHref="/room/register/bathroom"
+                isValid={!!bedroomCount}
+            />
         </Container>
     );
 };
