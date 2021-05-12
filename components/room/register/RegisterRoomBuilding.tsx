@@ -9,6 +9,11 @@ import Selector from "../../common/Selector";
 import RadioGroup from "../../common/RadioGroup";
 import RegisterRoomFooter from "./RegisterRoomFooter";
 
+/*
+
+    1단계
+
+*/
 const Container = styled.div`
     padding: 62px 30px 100px;
     h2 {

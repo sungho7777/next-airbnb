@@ -16,6 +16,11 @@ import RegisterRoomBedTypes from "./RegisterRoomBedTypes";
 //import RegisterRoomBedTypes from "./RegisterRoomBedTypes";
 import RegisterRoomFooter from "./RegisterRoomFooter";
 
+/*
+
+    2단계
+
+*/
 const Container = styled.div`
     padding: 62px 30px 100px;
     h2 {

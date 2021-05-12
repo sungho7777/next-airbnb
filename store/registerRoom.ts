@@ -3,20 +3,37 @@ import { secondaryUnitBuildingTypeList } from "../lib/staticData";
 import {BedType} from "../types/room";
 
 type RegisterRoomState = {
+    // * 숙소등록하기 1단계 (건물, 숙소) 리덕스 설정
     largeBuildingType: string | null;
     buildingType: string | null;
     roomType: string | null;
     isSetUpForGuest: boolean | null;
-
+    
+    // * 숙소등록하기 2단계 (인원, 침대, 공용공간) 리덕스 설정
     maximumGuestCount:number;
     bedroomCount:number;
     bedCount:number;
     bedList:{id:number; beds:{type:BedType; count:number}[]}[];
     publicBedList:{type:BedType; count:number}[];
+    
+    // * 숙소등록하기 3단계 (욕실) 리덕스 설정
+    bathroomCount:number;
+    bathroomType: "private" | "public" | null;
+
+    // * 숙소등록하기 4단계 (위치) 리덕스 설정
+    country:string;
+    city:string;
+    district:string;
+    streetAddress:string;
+    detailAddress:string;
+    postcode:string;
+    latitude:number;
+    longitude:number;
 };
 
 // * 초기상태
 const initialState: RegisterRoomState = {
+    //
     largeBuildingType: null,        // * 건물 유형 큰 범주
     buildingType:null,              // * 건물 유형
     roomType: null,                 // * 숙소 유형
@@ -27,13 +44,29 @@ const initialState: RegisterRoomState = {
     bedCount:1,                     // * 침대 개수
     bedList:[],                     // * 침대 유형
     publicBedList:[],               // * 공용공간 침대 유형
-
+    //
+    bathroomCount: 1,               // * 욕실 개수
+    bathroomType: null,             // * 욕실 유형
+    //
+    country:"",                     // * 국가/지역
+    city:"",                        // * 시/도
+    district:"",                    // * 시/군/구
+    streetAddress:"",               // * 도로명주소
+    detailAddress:"",               // * 동호수
+    postcode:"",                    // * 우편번호
+    latitude:0,                     // * 위도
+    longitude:0,                    // * 경도
 };
 
 const registerRoom = createSlice({
     name:"registerRoom",
     initialState,
     reducers:{
+        /*
+        
+            * 숙소등록하기 1단계 (건물, 숙소) Change
+        
+        */
         // 큰 건물 유형 변경하기
         setLargeBuildingType(state, action: PayloadAction<string>) {
           if(action.payload === "") {
@@ -65,6 +98,11 @@ const registerRoom = createSlice({
             state.maximumGuestCount = action.payload;
             return state;
         },
+        /*
+        
+            * 숙소등록하기 2단계 (인원, 침대, 공용공간) Change
+        
+        */
         // * 침실 개수 변경하기
         setBedroomCount(state, action: PayloadAction<number>) {
             const bedroomCount = action.payload;
@@ -129,6 +167,56 @@ const registerRoom = createSlice({
                 state.publicBedList[index].count = count;
             }
             return state;
+        },
+        /*
+        
+            * 숙소등록하기 3단계 (욕실) Change
+        
+        */
+        // * 욕실 개수 변경하기.
+        setBathroomCount(state, action:PayloadAction<number>){
+            state.bathroomCount = action.payload;
+        },
+        // * 욕실 유형 변경하기.
+        setBathroomType(state, action:PayloadAction<"private" | "public">){
+            state.bathroomType = action.payload;
+        },
+        /*
+        
+            * 숙소등록하기 4단계 (위치) Change
+        
+        */
+       // * 국가 변경하기
+        setCountry(state, action: PayloadAction<string>) {
+            state.country = action.payload;
+        },
+       // * 시도 변경하기
+        setCity(state, action: PayloadAction<string>) {
+            state.city = action.payload;
+        },
+       // * 시군구  변경하기
+        setDistrict(state, action: PayloadAction<string>) {
+            state.district = action.payload;
+        },
+       // * 도로명주소 변경하기
+        setStreetAddress(state, action: PayloadAction<string>) {
+            state.streetAddress = action.payload;
+        },
+       // * 동호수 변경하기
+        setDetailAddress(state, action: PayloadAction<string>) {
+            state.detailAddress = action.payload;
+        },
+       // * 우편번호 변경하기
+        setPostcode(state, action: PayloadAction<string>) {
+            state.postcode = action.payload;
+        },
+       // * 위도 변경하기
+        setLatitude(state, action: PayloadAction<number>) {
+            state.latitude = action.payload;
+        },
+       // * 경도 변경하기
+        setLongitude(state, action: PayloadAction<number>) {
+            state.longitude = action.payload;
         },
     },
 });

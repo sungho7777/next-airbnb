@@ -49,11 +49,18 @@ interface IProps{
 
 const RegisterRoomBedTypes: React.FC<IProps> = ({bedroom})=>{
     const [opened, setOpened] = useState(false);
-    //const publicBedList = useSelector((state)=>state.registerRoom.publicBedList);
-
     
-    const dispatch = useDispatch();
+    const initialBedOptions = bedroom.beds.map((bed) => bed.type);
 
+    // * 선택된 침대 옵션들
+    const [activedBedOptions, setActivedBedOptions] = useState<BedType[]>(
+        initialBedOptions
+    );
+
+    // * 남은 침대 옵션들
+    const lastBedOptions=useMemo(()=>{
+        return bedTypes.filter((bedType)=>!activedBedOptions.includes(bedType));
+    }, [activedBedOptions, bedroom]);
 
     // * 침대 개수 총합
     const totalBedsCount = useMemo(()=>{
@@ -63,24 +70,27 @@ const RegisterRoomBedTypes: React.FC<IProps> = ({bedroom})=>{
         });
         return total;
     }, [bedroom]);
+
+    //* 침실 유형 열고 닫기
+    const toggleOpened = () => setOpened(!opened);
+
+    //* 침실 침대 갯수 변경시
+    const onChangeBedTypeCount = (value: number, type: BedType) =>
+      dispatch(
+        registerRoomActions.setBedTypeCount({
+          bedroomId: bedroom.id,
+          type,
+          count: value,
+        })
+    );
+
     // * 침대 종류 텍스트
     const bedsText = useMemo(()=>{
         const texts=bedroom.beds.map((bed) => `${bed.type} ${bed.count} 개`);
         return texts.join(",");
-    }, []);
+    }, [bedroom]);
 
-    const initialBedOptions = bedroom.beds.map((bed) => bed.type);
-    // * 선택된 침대 옵션들
-    const [activedBedOptions, setActivedBedOptions] = useState<BedType[]>(
-        initialBedOptions
-    );
-    // * 남은 침대 옵션들
-    const lastBedOptions=useMemo(()=>{
-        return bedTypes.filter((bedType)=>!activedBedOptions.includes(bedType));
-    }, [activedBedOptions, bedroom]);
-
-    
-
+    const dispatch = useDispatch();
 
     return (
         <Container>
@@ -115,16 +125,9 @@ const RegisterRoomBedTypes: React.FC<IProps> = ({bedroom})=>{
                                     bedroom.beds.find((bed)=>bed.type === type)?.count || 0
                                 }
                                 key={type}
-                                onChange={(value) =>
-                                    dispatch(
-                                        // * 침대 유형 개수 변경하기
-                                        registerRoomActions.setBedTypeCount({
-                                            bedroomId: bedroom.id,
-                                            type,
-                                            count: value,
-                                        })
-                                    )
-                                }
+                                onChange={(value) => {
+                                    onChangeBedTypeCount(value, type);
+                                }}
                             />
                         </div>
                     ))}
