@@ -230,9 +230,10 @@ const RegisterRoomBuilding:React.FC=()=>{
                 </>
             )}
             <RegisterRoomFooter
-                isValid={false}
+                isValid={isValid}
                 prevHref="/"
                 nextHref="/room/register/bedrooms"
+                
             />
         </Container>
     );

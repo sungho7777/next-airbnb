@@ -24,10 +24,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/room/register/bathroom": [
+    "/room/register/geometry": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/room/register/bathroom.js"
+      "static/chunks/pages/room/register/geometry.js"
     ],
     "/room/register/location": [
       "static/chunks/webpack.js",

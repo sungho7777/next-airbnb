@@ -119,7 +119,7 @@ const RegisterRoomBedTypes: React.FC<IProps> = ({bedroom})=>{
                 <div className="register-room-bed-type-counters">
                     {activedBedOptions.map((type)=>(
                         <div className="register-room-bed-type-counter" key={type}>
-                            <Container
+                            <Counter
                                 label={type}
                                 value={
                                     bedroom.beds.find((bed)=>bed.type === type)?.count || 0
