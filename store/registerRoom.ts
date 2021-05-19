@@ -29,6 +29,15 @@ type RegisterRoomState = {
     postcode:string;
     latitude:number;
     longitude:number;
+
+    // * 숙소등록하기 5단계 (편의시설) 리덕스 설정
+    amentities:string[];
+
+    // * 숙소등록하기 6단계 (편의공간) 리덕스 설정
+    conveniences:string[];
+
+    // * 숙소등록하기 7단계 (숙소사진) 리덕스 설정
+    photos:string[];
 };
 
 // * 초기상태
@@ -56,6 +65,12 @@ const initialState: RegisterRoomState = {
     postcode:"",                    // * 우편번호
     latitude:0,                     // * 위도
     longitude:0,                    // * 경도
+    //
+    amentities:[],                  // * 편의시설
+    //
+    conveniences:[],                // * 편의공간
+    //
+    photos:[],                      // * 숙소사진
 };
 
 const registerRoom = createSlice({
@@ -218,6 +233,36 @@ const registerRoom = createSlice({
         setLongitude(state, action: PayloadAction<number>) {
             state.longitude = action.payload;
         },
+        /*
+        
+            * 숙소등록하기 5단계 (편의시설) Change
+        
+        */
+       // * 편의 시설 변경하기
+        setAmentities(state, action: PayloadAction<string[]>) {
+            state.amentities = action.payload;
+        },
+        /*
+        
+            * 숙소등록하기 6단계 (편의공간) Change
+        
+        */
+        // * 편의 공간 변경하기
+        setConveniences(state, action: PayloadAction<string[]>) {
+            state.conveniences = action.payload;
+        },
+        /*
+        
+            * 숙소등록하기 7단계 (숙소사진) Change
+        
+        */
+        // * 편의 공간 변경하기
+        setPhotos(state, action: PayloadAction<string[]>) {
+            state.photos = action.payload;
+        },
+
+
+
     },
 });
 
