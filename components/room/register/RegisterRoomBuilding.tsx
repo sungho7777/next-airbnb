@@ -233,7 +233,6 @@ const RegisterRoomBuilding:React.FC=()=>{
                 isValid={isValid}
                 prevHref="/"
                 nextHref="/room/register/bedrooms"
-                
             />
         </Container>
     );

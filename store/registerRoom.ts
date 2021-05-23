@@ -38,6 +38,19 @@ type RegisterRoomState = {
 
     // * 숙소등록하기 7단계 (숙소사진) 리덕스 설정
     photos:string[];
+
+    // * 숙소등록하기 8단계 (숙소설명) 리덕스 설정
+    description:string;
+
+    // * 숙소등록하기 9단계 (제목) 리덕스 설정
+    title:string;
+
+    // * 숙소등록하기 10단계 (가격) 리덕스 설정
+    price:number;
+
+    // * 숙소등록하기 11단계 (날짜) 리덕스 설정
+    startDate:string|null;
+    endDate:string|null;
 };
 
 // * 초기상태
@@ -71,6 +84,16 @@ const initialState: RegisterRoomState = {
     conveniences:[],                // * 편의공간
     //
     photos:[],                      // * 숙소사진
+    //
+    description:"",                 // * 숙소설명
+    //
+    title:"",                       // * 제목
+    //
+    price:0,                        // * 숙소요금
+    //
+    startDate:null,                 // * 예약 시작날짜
+    endDate:null,                   // * 예약 마감날짜
+    
 };
 
 const registerRoom = createSlice({
@@ -253,13 +276,56 @@ const registerRoom = createSlice({
         },
         /*
         
-            * 숙소등록하기 7단계 (숙소사진) Change
+            * 숙소등록하기 7단계 (숙소사진) photo
         
         */
-        // * 편의 공간 변경하기
+        // * 숙소 사진 변경하기
         setPhotos(state, action: PayloadAction<string[]>) {
             state.photos = action.payload;
         },
+        /*
+        
+            * 숙소등록하기 8단계 (숙소설명) description
+        
+        */
+        // * 숙소 설명 변경하기
+        setDescription(state, action: PayloadAction<string>) {
+            state.description = action.payload;
+        },
+        /*
+        
+            * 숙소등록하기 9단계 (제목) description
+        
+        */
+        // * 숙소 제목 변경하기
+        setTitle(state, action: PayloadAction<string>) {
+            state.title = action.payload;
+        },
+        /*
+        
+            * 숙소등록하기 10단계 (가격) Change
+        
+        */
+        // * 숙소 가격 변경하기.
+        setPrice(state, action:PayloadAction<number>){
+            state.price = action.payload;
+        },
+        /*
+        
+            * 예약날짜 등록하기 11단계 (날짜) date
+        
+        */
+        // * 예약 시작날짜 변경하기.
+        setStartDate(state, action:PayloadAction<string|null>){
+            state.startDate = action.payload;
+        },
+        // * 예약 마감날짜 변경하기.
+        setEndDate(state, action:PayloadAction<string|null>){
+            state.endDate = action.payload;
+        },
+
+
+
 
 
 

@@ -24,15 +24,15 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/room/register/geometry": [
+    "/room/register/description": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/room/register/geometry.js"
+      "static/chunks/pages/room/register/description.js"
     ],
-    "/room/register/location": [
+    "/room/register/title": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/room/register/location.js"
+      "static/chunks/pages/room/register/title.js"
     ]
   },
   "ampFirstPages": []

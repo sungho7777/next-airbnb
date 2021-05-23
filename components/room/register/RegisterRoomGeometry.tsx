@@ -4,7 +4,7 @@ import throttle from "lodash/throttle";
 import { useSelector } from "../../../store";
 import { useDispatch } from "react-redux";
 
-import { registerRoomActions } from "./registerRoomActions";
+import { registerRoomActions } from "../../../store/registerRoom";
 import RegisterRoomFooter from "./RegisterRoomFooter";
 
 import styled from "styled-components";
