@@ -118,7 +118,6 @@ const RegisterRoomGeomtry:React.FC=()=>{
                 <RegisterRoomFooter
                     prevHref="/room/register/location"
                     nextHref="/room/register/amentities"
-                    
                 />
             </Container>
         </>

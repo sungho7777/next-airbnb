@@ -2,6 +2,6 @@
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
   "/_error": "pages/_error.js",
-  "/room/register/title": "pages/room/register/title.js",
-  "/room/register/description": "pages/room/register/description.js"
+  "/room/register/checklist": "pages/room/register/checklist.js",
+  "/room/register/date": "pages/room/register/date.js"
 }

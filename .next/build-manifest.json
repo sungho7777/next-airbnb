@@ -24,15 +24,15 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/room/register/description": [
+    "/room/register/checklist": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/room/register/description.js"
+      "static/chunks/pages/room/register/checklist.js"
     ],
-    "/room/register/title": [
+    "/room/register/date": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/room/register/title.js"
+      "static/chunks/pages/room/register/date.js"
     ]
   },
   "ampFirstPages": []
