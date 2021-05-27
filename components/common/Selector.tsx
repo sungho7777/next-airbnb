@@ -3,7 +3,7 @@ import React from "react"
 import styled, {css} from "styled-components"
 import palette from "../../styles/palette"
 import {useSelector} from "../../store"
-//import WarningIcon from "../../public/static/svg/common/warning.svg";
+import WarningIcon from "../../public/static/svg/common/warning.svg";
 
 const normalSelectorStyle = css`
   width: 100%;
@@ -20,7 +20,6 @@ const normalSelectorStyle = css`
     background-image: url("/static/svg/selector/selector_down_arrow.svg");
     background-position: right 11px center;
     background-repeat: no-repeat;
-    font-size: 16px;
     &:focus {
       border-color: ${palette.dark_cyan};
     }
@@ -48,8 +47,9 @@ const RegisterSelectorStyle = css`
     outline: none;
     -webkit-appearance: none;
     background-image: url("/static/svg/selector/register_selector_down_arrow.svg");
-    background-position: right 11px center;
+    background-position: right 14px center;
     background-repeat: no-repeat;
+    font-size:16px;
   }
 `;
 
@@ -133,8 +133,13 @@ const Selector: React.FC<IProps> = ({
       <label>
         {label && <span>{label}</span>}
         <select {...props}>
+          {disabledOptions.map((option, index) => (
+            <option key={index} value={option} disabled>
+              {option}
+            </option>
+          ))}
           {options?.map((option, index) => (
-            <option key={index} value={option} disabled={disabledOptions.includes(option)}>
+            <option key={index} value={option} >
               {option}
             </option>
           ))}
@@ -142,7 +147,7 @@ const Selector: React.FC<IProps> = ({
       </label>
       {useValidation && validateMode && !isValid && (
         <div className="selector-warning">
-          
+          <WarningIcon />
           <p>{errorMessage}</p>
         </div>
       )}

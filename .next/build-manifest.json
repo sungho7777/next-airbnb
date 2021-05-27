@@ -24,15 +24,70 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
+    "/room/register/amentities": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/room/register/amentities.js"
+    ],
+    "/room/register/bathroom": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/room/register/bathroom.js"
+    ],
+    "/room/register/bedrooms": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/room/register/bedrooms.js"
+    ],
+    "/room/register/building": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/room/register/building.js"
+    ],
     "/room/register/checklist": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/room/register/checklist.js"
     ],
+    "/room/register/conveniences": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/room/register/conveniences.js"
+    ],
     "/room/register/date": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/room/register/date.js"
+    ],
+    "/room/register/description": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/room/register/description.js"
+    ],
+    "/room/register/geometry": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/room/register/geometry.js"
+    ],
+    "/room/register/location": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/room/register/location.js"
+    ],
+    "/room/register/photo": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/room/register/photo.js"
+    ],
+    "/room/register/price": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/room/register/price.js"
+    ],
+    "/room/register/title": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/room/register/title.js"
     ]
   },
   "ampFirstPages": []

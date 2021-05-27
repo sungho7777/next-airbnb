@@ -114,6 +114,7 @@ const RegisterRoomBedrooms:React.FC=()=>{
 
     return (
         <Container>
+            <h3>RegisterBedrooms--------------------------------------</h3>
             <h2>숙소에 얼마나 많은 인원이 숙박할 수 있나요?</h2>
             <h3>2단계</h3>
             <p className="room-register-step-info">
@@ -129,7 +130,7 @@ const RegisterRoomBedrooms:React.FC=()=>{
             <div className="register-room-bedroom-count-wrapper">
                 <Selector
                     type="register"
-                    value={`침실 ${bedrooms} 개`}
+                    value={`침실 ${bedroomCount}개`}
                     onChange={onChangeBedroomCount}
                     label="게스트가 사용할 수 있는 침실은 몇 개인가요?"
                     isValid={!!bedroomCount}
@@ -149,7 +150,9 @@ const RegisterRoomBedrooms:React.FC=()=>{
                 각 침실에 놓인 침대 유형을 명시하면 숙소에 침대가 어떻게 구비되어 있는지 게스트가 잘 파악할 수 있습니다.
             </p>
             
+            <h3>RegisterRoomBedList--------------------------------------</h3>
             <RegisterRoomBedList />
+            
             
             <RegisterRoomFooter
                 prevHref="/room/register/building"

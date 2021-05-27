@@ -53,6 +53,12 @@ const getButtonSize = (size:"small" | "medium")=>{
   }
 };
 
+interface SytledButtonprops {
+  width: string | undefined;
+  colorReverse: boolean;
+  size: "small" | "medium"
+}
+
 const Container = styled.button<SytledButtonprops>`
   display: flex;
   justify-content: center;
@@ -100,11 +106,6 @@ const RegisterButtonStyle = css`
   cursor: pointer;
 `;
 
-interface SytledButtonprops {
-  width: string | undefined;
-  colorReverse: boolean;
-  size: "small" | "medium"
-}
 
 interface IProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;

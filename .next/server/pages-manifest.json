@@ -2,6 +2,18 @@
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
   "/_error": "pages/_error.js",
-  "/room/register/checklist": "pages/room/register/checklist.js",
-  "/room/register/date": "pages/room/register/date.js"
+  "/room/register/bedrooms": "pages/room/register/bedrooms.js",
+  "/api/auth/me": "pages/api/auth/me.js",
+  "/room/register/building": "pages/room/register/building.js",
+  "/room/register/bathroom": "pages/room/register/bathroom.js",
+  "/room/register/location": "pages/room/register/location.js",
+  "/room/register/geometry": "pages/room/register/geometry.js",
+  "/room/register/amentities": "pages/room/register/amentities.js",
+  "/room/register/conveniences": "pages/room/register/conveniences.js",
+  "/room/register/photo": "pages/room/register/photo.js",
+  "/room/register/description": "pages/room/register/description.js",
+  "/room/register/title": "pages/room/register/title.js",
+  "/room/register/price": "pages/room/register/price.js",
+  "/room/register/date": "pages/room/register/date.js",
+  "/room/register/checklist": "pages/room/register/checklist.js"
 }

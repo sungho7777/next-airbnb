@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { uploadFileAPI } from "../../../lib/api/file";
-import PencilIcon from "../../public/static/svg/register/photo/pencil.svg";
-import TrashCanIcon from "../../public/static/svg/register/photo/trash_can.svg";
-import GrayPlusIcon from "../../public/static/svg/register/photo/gray_plus.svg";
+import PencilIcon from "../../../public/static/svg/register/photo/pencil.svg";
+import TrashCanIcon from "../../../public/static/svg/register/photo/trash_can.svg";
+import GrayPlusIcon from "../../../public/static/svg/register/photo/gray_plus.svg";
 import palette from "../../../styles/palette";
 import { registerRoomActions } from "../../../store/registerRoom";
 

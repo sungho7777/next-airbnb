@@ -54,7 +54,7 @@ const RegisterRoomPrice:React.FC=()=>{
             />
             <RegisterRoomFooter
                 prevHref="/room/register/title"
-                nextHref="/room/register/data"
+                nextHref="/room/register/date"
             />
         </Container>
     );

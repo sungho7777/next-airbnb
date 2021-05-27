@@ -154,7 +154,7 @@ const registerRoom = createSlice({
             } else {
                 //* 변경될 침대 개수가 더 많으면 나머지 침실 채우기
                 for (let i = bedList.length + 1; i < bedroomCount + 1; i += 1) {
-                bedList.push({ id: i, beds: [] });
+                    bedList.push({ id: i, beds: [] });
                 }
             }
 

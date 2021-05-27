@@ -2,7 +2,6 @@ import React, {useMemo, useState} from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { bedTypes } from "../../../lib/staticData";
-import {useSelector} from "../../../store";
 import { registerRoomActions } from "../../../store/registerRoom";
 import palette from "../../../styles/palette";
 import {BedType} from "../../../types/room";
@@ -34,12 +33,19 @@ const Container = styled.li`
     width: 320px;
   }
   .register-room-bed-type-counters {
-    font-size: 19px;
-    color: ${palette.gray_76};
+    width: 320px;
+    margin-top: 28px;
   }
   .register-room-bed-type-counter {
     width: 290px;
     margin-bottom: 18px;
+  }
+  
+  .register-room-bed-type-bedroom-counts {
+    font-size: 19px;
+    color: ${palette.gray_76};
+    max-width: 240px;
+    word-break: keep-all;
   }
 `;
 
@@ -86,7 +92,7 @@ const RegisterRoomBedTypes: React.FC<IProps> = ({bedroom})=>{
 
     // * 침대 종류 텍스트
     const bedsText = useMemo(()=>{
-        const texts=bedroom.beds.map((bed) => `${bed.type} ${bed.count} 개`);
+        const texts=bedroom.beds.map((bed) => `${bed.type} ${bed.count}개`);
         return texts.join(",");
     }, [bedroom]);
 
@@ -96,7 +102,7 @@ const RegisterRoomBedTypes: React.FC<IProps> = ({bedroom})=>{
         <Container>
             <div className="register-room-bed-type-top">
                 <div>
-                    <p className="register-room-bed-type-bedroom">{bedroom.id} 번 침실</p>
+                    <p className="register-room-bed-type-bedroom">{bedroom.id}번 침실</p>
                     <p className="register-room-bed-type-bedroom-counts">
                         침대 {totalBedsCount}개 <br />
                         
@@ -104,19 +110,17 @@ const RegisterRoomBedTypes: React.FC<IProps> = ({bedroom})=>{
                     <p>{bedsText}</p>
                 </div>
                 <Button 
-                    onClick={()=>setOpened(!opened)}
-                    styleType="register"
-                    color="white"
-                >
-                    {opened && "완료"}
-                    {!opened &&
-                        (totalBedsCount === 0 ? "침대 추가하기":"침대 수정하기")
-                    }
+                    onClick={toggleOpened} 
+                    styleType="register" 
+                    color="white" 
+                    width="161px">
+                        {opened && "완료"}
+                        {!opened && (totalBedsCount === 0 ? "침대 추가하기" : "침대 수정하기")}
                 </Button>
             </div>
             
             {opened && (
-                <div className="register-room-bed-type-counters">
+                <div className="register-room-bed-type-selector-wrapper">
                     {activedBedOptions.map((type)=>(
                         <div className="register-room-bed-type-counter" key={type}>
                             <Counter

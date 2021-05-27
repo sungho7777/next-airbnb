@@ -1,5 +1,5 @@
 import React from "react";
-import { bedroomCountList } from "../../../lib/staticData";
+
 import { useSelector } from "../../../store";
 import RegisterRoomBedTypes from "./RegisterRoomBedTypes";
 import RegisterRoomPublicBedTypes from "./RegisterRoomPublicBedTypes";
@@ -14,6 +14,7 @@ const RegisterRoomBedList:React.FC=()=>{
             {bedList.map((bedroom)=>(
                 <RegisterRoomBedTypes key={bedroom.id} bedroom={bedroom} />
             ))}
+            <h3>RegisterRoomPublicBedTypes--------------------------------------</h3>
             <RegisterRoomPublicBedTypes />
         </ul>
     );
